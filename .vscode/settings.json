@@ -1,0 +1,5 @@
+{
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "off",
+  "python.defaultInterpreterPath": "/Users/lafity101/anaconda3/envs/tff/bin/python3",
+}
