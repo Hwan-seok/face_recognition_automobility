@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 from tensorflow import keras
-from keras.applications import ResNet101
+from keras.applications import ResNet50V2
 from keras.models import  Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.optimizers.legacy import Adam
@@ -25,11 +25,10 @@ from lite_util import convert_to_tf_lite
 num_of_classes = 4
 image_size = 224
 batch_size = 32
-epochs = 5
+epochs = 1
 train_directory = os.environ.get("TRAIN_DIRECTORY", "/YOU_MUST_SPECIFY_PATH")
 
-# Load the ResNet50 base model, pre-trained on ImageNet
-base_model = ResNet101(weights='imagenet', include_top=False)
+base_model = ResNet50V2(weights='imagenet', include_top=False)
 
 # Freeze the layers of the base_model
 for layer in base_model.layers:
@@ -79,11 +78,14 @@ history = model.fit(
     validation_steps=validation_generator.samples // batch_size
 )
 
-model_path = f'saved_model/model_{datetime.now()}.h5'
+model_relative_path = f'saved_model/model.h5'
+model_path = os.path.dirname(os.path.realpath(__file__)) + '/'+ model_relative_path
+
 model.save(model_path)
-convert_to_tf_lite(model_path)
+# model = tf.keras.models.load_model('saved_model/model.h5')
+convert_to_tf_lite(model)
 
 visualize_model_fit(history)
-model = tf.keras.models.load_model('saved_model/main.h5')
+model = tf.keras.models.load_model(model_path)
 
 debug_model_prediction(validation_generator, model)

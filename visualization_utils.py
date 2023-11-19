@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os 
+
+dirname = os.path.dirname(os.path.realpath(__file__))
 
 ##### Debug augmented images
 
@@ -13,7 +16,7 @@ def debug_augmented_images(train_generator):
       plt.imshow(x_batch[i].astype('uint8'))
       plt.axis('off')
   plt.tight_layout()
-  plt.savefig('figures/augmented_images_debug.png')
+  plt.savefig(f'{dirname}/figures/augmented_images_debug.png')
 
 
 
@@ -43,7 +46,7 @@ def debug_model_prediction(validation_generator, model):
       plt.axis("off")
   
   plt.tight_layout()
-  plt.savefig('figures/model_prediction_debug.png')
+  plt.savefig(f'{dirname}/figures/model_prediction_debug.png')
 
 def visualize_model_fit(history): 
   # summarize history for accuracy
@@ -62,4 +65,4 @@ def visualize_model_fit(history):
   plt.xlabel('epoch')
   plt.legend(['train', 'test'], loc='upper left')
 
-  plt.savefig('figures/model_fit.png')
+  plt.savefig(f'{dirname}/figures/model_fit.png')
