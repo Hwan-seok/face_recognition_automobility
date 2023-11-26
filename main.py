@@ -24,7 +24,7 @@ from lite_util import convert_to_tf_lite
 num_of_classes = 4
 image_size = 224
 batch_size = 32
-epochs = 200
+epochs = 100
 train_directory = os.environ.get("TRAIN_DIRECTORY", "/YOU_MUST_SPECIFY_PATH")
 
 base_model = ResNet50V2(weights="imagenet", include_top=False)
@@ -68,6 +68,7 @@ validation_generator = data_gen.flow_from_directory(
     class_mode="categorical",
     subset="validation",  # Set as validation data
 )
+print(train_generator.class_indices.keys())
 
 # debug_augmented_images(train_generator)
 
